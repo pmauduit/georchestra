@@ -156,12 +156,13 @@
       <version>${cas.version}</version>
     </dependency>
 
+    <!--
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-integration-memcached</artifactId>
       <version>${cas.version}</version>
     </dependency>
-
+    -->
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-webapp-actions</artifactId>
@@ -251,6 +252,12 @@
       <version>1.1.2</version>
       <type>jar</type>
       <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>taglibs</groupId>
