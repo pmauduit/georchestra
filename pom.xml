@@ -91,6 +91,7 @@
   <modules>
     <module>ogc-server-statistics</module>
     <module>commons</module>
+    <module>cas-server-support-openid</module>
   </modules>
   <dependencyManagement>
     <dependencies>

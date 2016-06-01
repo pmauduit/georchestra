@@ -20,7 +20,6 @@
 package org.georchestra.cas.ldap;
 
 import java.security.GeneralSecurityException;
-import java.util.Collection;
 
 import javax.security.auth.login.AccountException;
 import javax.validation.constraints.NotNull;
@@ -33,7 +32,6 @@ import org.ldaptive.BindRequest;
 import org.ldaptive.Connection;
 import org.ldaptive.Credential;
 import org.ldaptive.DefaultConnectionFactory;
-import org.ldaptive.LdapEntry;
 import org.ldaptive.LdapException;
 import org.ldaptive.SearchOperation;
 import org.ldaptive.SearchRequest;
