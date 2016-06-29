@@ -33,6 +33,7 @@
     <util:map id="authenticationHandlersResolvers">
         <entry key-ref="proxyAuthenticationHandler" value-ref="proxyPrincipalResolver" />
         <entry key-ref="primaryAuthenticationHandler" value-ref="primaryPrincipalResolver" />
+        <entry key-ref="ldapAuthenticationHandler" value-ref="primaryPrincipalResolver" />
     </util:map>
 
     <util:list id="authenticationMetadataPopulators">
@@ -59,6 +60,86 @@
             </list>
         </entry>
     </util:map>
+
+    <!-- geOrchestra generic configuration -->
+    <bean id="ldapAuthenticationHandler"
+        class="org.georchestra.cas.ldap.GeorchestraLdapAuthenticationHandler"
+        p:principalIdAttribute="uid"
+        p:connectionFactory-ref="connectionFactory">
+        <constructor-arg ref="authenticator" />
+        <constructor-arg value="${ldap.admin.username}" />
+        <constructor-arg value="${ldap.admin.password}" />
+        <constructor-arg value="${ldap.authn.groupSearchBaseDn}" />
+        <constructor-arg value="${ldap.authn.groupSearchFilter}" />
+        <constructor-arg value="${ldap.authn.groupRoleAttribute}" />
+        <constructor-arg value="${ldap.authn.pendingGroupName}" />
+        <property name="principalAttributeMap">
+            <map>
+                <entry key="cn" value="fullname" />
+                <entry key="uid" value="uid" />
+                <entry key="o" value="organisation" />
+                <entry key="mail" value="email" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- Ldaptive -->
+
+    <bean id="connectionFactory" class="org.ldaptive.DefaultConnectionFactory"
+        p:connectionConfig-ref="connectionConfig" />
+
+    <bean id="connectionConfig" class="org.ldaptive.ConnectionConfig"
+        p:ldapUrl="${ldap.url}"
+        p:connectTimeout="${ldap.connectTimeout}"
+        p:useStartTLS="${ldap.useStartTLS}" />
+        
+    <bean id="ldapPoolConfig" class="org.ldaptive.pool.PoolConfig"
+        p:minPoolSize="${ldap.pool.minSize}"
+        p:maxPoolSize="${ldap.pool.maxSize}"
+        p:validateOnCheckOut="${ldap.pool.validateOnCheckout}"
+        p:validatePeriodically="${ldap.pool.validatePeriodically}"
+        p:validatePeriod="${ldap.pool.validatePeriod}" />
+
+    <bean id="pruneStrategy" class="org.ldaptive.pool.IdlePruneStrategy"
+        p:prunePeriod="${ldap.pool.prunePeriod}"
+        p:idleTime="${ldap.pool.idleTime}" />        
+        
+    <bean id="searchValidator" class="org.ldaptive.pool.SearchValidator" />
+    
+    <bean id="waitForLdap" class="org.georchestra.cas.ldap.WaitForLdap" init-method="test">
+        <property name="ldapUrl" value="${ldap.url}"/>
+        <property name="connectTimeout" value="${ldap.connectTimeout}"/>
+        <property name="useStartTLS" value="${ldap.useStartTLS}"/>
+        <property name="username" value="${ldap.admin.username}"/>
+        <property name="password" value="${ldap.admin.password}"/>
+        <property name="groupSearchBaseDn" value="${ldap.authn.groupSearchBaseDn}"/>
+    </bean>
+
+    <bean id="connectionPool" class="org.ldaptive.pool.BlockingConnectionPool"
+        init-method="initialize" depends-on="waitForLdap"
+        p:poolConfig-ref="ldapPoolConfig"
+        p:blockWaitTime="${ldap.pool.blockWaitTime}"
+        p:pruneStrategy-ref="pruneStrategy"
+        p:connectionFactory-ref="connectionFactory" />
+
+    <bean id="pooledLdapConnectionFactory" class="org.ldaptive.pool.PooledConnectionFactory"
+        p:connectionPool-ref="connectionPool" />
+
+    <bean id="authenticator" class="org.ldaptive.auth.Authenticator"
+        c:resolver-ref="pooledSearchDnResolver"
+        c:handler-ref="pooledBindHandler" />
+
+    <bean id="pooledSearchDnResolver" class="org.ldaptive.auth.PooledSearchDnResolver"
+        p:baseDn="${ldap.authn.userSearchBaseDn}"
+        p:allowMultipleDns="false"
+        p:connectionFactory-ref="pooledLdapConnectionFactory"
+        p:userFilter="${ldap.authn.searchFilter}" />
+
+    <bean id="pooledBindHandler" class="org.ldaptive.auth.PooledBindAuthenticationHandler"
+        p:connectionFactory-ref="pooledLdapConnectionFactory"/>
+    <!-- End ldaptive -->
+    
+    <!-- End geOrchestra configuration -->
 
     <alias name="serviceThemeResolver" alias="themeResolver" />
 
