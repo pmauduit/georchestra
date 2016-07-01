@@ -16,10 +16,9 @@
         can be moved between tiers without modification.
     </description>
 
-    <util:properties id="casProperties" location="${cas.properties.config.location:/WEB-INF/cas.properties}"/>
+    <util:properties id="casProperties"  ignore-resource-not-found="true"
+      location="${cas.properties.config.location:/WEB-INF/cas.properties},file:#{systemProperties['georchestra.datadir']}/cas/cas.properties"/>
 
-    <context:property-placeholder properties-ref="casProperties" order="2" />
-    <!-- using the one from the geOrchestra datadir first (if available) -->
-    <context:property-placeholder location="file:${georchestra.datadir:}/cas/cas.properties"
-          ignore-resource-not-found="true" ignore-unresolvable="true"  order="1" />
+    <context:property-placeholder properties-ref="casProperties" />
+
 </beans>
