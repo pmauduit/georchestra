@@ -107,7 +107,6 @@
     <bean id="loginFlowCipherKeystore" class="java.security.KeyStore"
           factory-bean="loginFlowCipherKeystoreFactory" factory-method="newInstance"/>
 
-    <!-- This will break Java7 compatibility and force Java8 -->
     <bean id="loginFlowCipherKeystoreFactory" class="org.cryptacular.bean.KeyStoreFactoryBean"
           c:type="${cas.webflow.keystore.type:JCEKS}"
           c:password="${cas.webflow.keystore.password:changeit}">
