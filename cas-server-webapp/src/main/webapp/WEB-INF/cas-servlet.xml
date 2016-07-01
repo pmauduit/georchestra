@@ -143,6 +143,5 @@
   <bean id="georchestraConfigurator" class="org.georchestra.commons.configuration.GeorchestraConfiguration">
         <constructor-arg value="cas" />
   </bean>
-  
-  <bean class="org.georchestra.commons.RemoveJceLimit" />
+
 </beans>
