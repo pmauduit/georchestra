@@ -544,7 +544,7 @@
       <properties>
         <dockerImageName>georchestra/cas</dockerImageName>
         <dockerDatadirScmUrl>scm:git:https://github.com/georchestra/datadir.git</dockerDatadirScmUrl>
-        <dockerDatadirScmVersion>docker-master</dockerDatadirScmVersion>
+        <dockerDatadirScmVersion>docker-cas4.2</dockerDatadirScmVersion>
       </properties>
       <build>
         <finalName>cas</finalName>
