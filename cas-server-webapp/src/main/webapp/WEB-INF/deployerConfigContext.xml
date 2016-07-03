@@ -41,29 +41,31 @@
         <ref bean="rememberMeAuthenticationMetaDataPopulator" />
     </util:list>
 
-    <bean id="attributeRepository" class="org.jasig.services.persondir.support.NamedStubPersonAttributeDao"
-          p:backingMap-ref="attrRepoBackingMap" />
-
-    <alias name="acceptUsersAuthenticationHandler" alias="primaryAuthenticationHandler" />
+    <alias name="ldapAuthenticationHandler" alias="primaryAuthenticationHandler" />
     <alias name="personDirectoryPrincipalResolver" alias="primaryPrincipalResolver" />
 
-    <util:map id="attrRepoBackingMap">
-        <entry key="uid" value="uid" />
-        <entry key="eduPersonAffiliation" value="eduPersonAffiliation" />
-        <entry key="groupMembership" value="groupMembership" />
-        <entry>
-            <key><value>memberOf</value></key>
-            <list>
-                <value>faculty</value>
-                <value>staff</value>
-                <value>org</value>
-            </list>
-        </entry>
-    </util:map>
-
     <!-- geOrchestra generic configuration -->
-    <bean id="ldapAuthenticationHandler"
-        class="org.georchestra.cas.ldap.GeorchestraLdapAuthenticationHandler"
+
+    <bean id="attributeRepository" class="org.jasig.services.persondir.support.ldap.LdaptivePersonAttributeDao">
+        <property name="baseDN" value="${ldap.authn.userSearchBaseDn}" />
+        <!-- TODO: new variable in the cas.properties here ? might not work with this one -->
+        <property name="searchFilter" value="${ldap.authn.searchFilter}" />
+        <property name="searchControls">
+            <bean class="javax.naming.directory.SearchControls" />
+        </property>
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="resultAttributeMapping">
+            <util:map>
+                <entry key="identifier" value="uid" />
+                <entry key="email" value="mail" />
+                <entry key="fullname" value="cn" />
+                <entry key="lastname" value="sn" />
+                <!-- TODO: see if other are needed (groups ?) -->            
+            </util:map>        
+        </property>
+    </bean>
+
+    <bean id="ldapAuthenticationHandler" class="org.georchestra.cas.ldap.GeorchestraLdapAuthenticationHandler"
         p:principalIdAttribute="uid"
         p:connectionFactory-ref="connectionFactory">
         <constructor-arg ref="authenticator" />
