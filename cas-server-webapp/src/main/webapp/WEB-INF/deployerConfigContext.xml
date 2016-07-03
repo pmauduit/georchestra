@@ -76,7 +76,7 @@
     <bean id="attributeRepository" class="org.jasig.services.persondir.support.ldap.LdaptivePersonAttributeDao">
         <property name="baseDN" value="${ldap.authn.userSearchBaseDn}" />
         <!-- TODO: new variable in the cas.properties here ? might not work with this one -->
-        <property name="searchFilter" value="${ldap.authn.searchFilter}" />
+        <property name="searchFilter" value="uid={0}" />
         <property name="searchControls">
             <bean class="javax.naming.directory.SearchControls" />
         </property>
