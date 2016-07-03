@@ -218,6 +218,13 @@
         <servlet-name>cas</servlet-name>
         <url-pattern>/authorizationFailure.html</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>cas</servlet-name>
+        <url-pattern>/yadis/yadis.xml</url-pattern>
+    </servlet-mapping>
+    
+    
     <!-- REST support if cas-server-support-rest is included -->
     <servlet-mapping>
         <servlet-name>cas</servlet-name>
