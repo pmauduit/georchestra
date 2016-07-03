@@ -37,81 +37,166 @@
       <artifactId>cas-server-support-ldap</artifactId>
       <version>${cas.version}</version>
       <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
         <groupId>org.jasig.cas</groupId>
         <artifactId>cas-server-support-openid-webflow</artifactId>
         <version>${cas.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.jasig.cas</groupId>
         <artifactId>cas-server-support-oauth</artifactId>
         <version>${cas.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-core</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-core-authentication</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-core-logout</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-core-monitor</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-core-services</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-core-tickets</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-core-util</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-core-validation</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-core-web</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-core-audit</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-core-events</artifactId>
       <version>${cas.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jasig.cas</groupId>
-      <artifactId>cas-server-core-logging</artifactId>
-      <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-core-webflow</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!--
@@ -125,50 +210,89 @@
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-webapp-actions</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-webapp-themes</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-webapp-cookie</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-webapp-reports</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-webapp-support</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-webapp-throttle</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-webapp-validation</artifactId>
       <version>${cas.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
-
     <dependency>
       <groupId>org.jasig.cas</groupId>
       <artifactId>cas-server-security-filter</artifactId>
       <version>2.0.4</version>
     </dependency>
-
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
       <version>${spring.version}</version>
     </dependency>
- 
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-expression</artifactId>
@@ -202,6 +326,16 @@
       <groupId>org.jasig</groupId>
       <artifactId>spring-webflow-client-repo</artifactId>
       <version>1.0.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -247,6 +381,11 @@
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-web</artifactId>
+      <version>2.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
       <version>2.5</version>
     </dependency>
     <!-- geOrchestra commons -->

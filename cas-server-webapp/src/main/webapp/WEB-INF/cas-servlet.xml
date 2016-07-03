@@ -140,8 +140,4 @@
     <bean id="credentialsValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"
           p:messageInterpolator-ref="messageInterpolator"/>
 
-  <bean id="georchestraConfigurator" class="org.georchestra.commons.configuration.GeorchestraConfiguration">
-        <constructor-arg value="cas" />
-  </bean>
-
 </beans>
