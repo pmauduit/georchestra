@@ -77,16 +77,17 @@
         <property name="baseDN" value="${ldap.authn.userSearchBaseDn}" />
         <!-- TODO: new variable in the cas.properties here ? might not work with this one -->
         <property name="searchFilter" value="uid={0}" />
+        <property name="unmappedUsernameAttribute" value="uid" />
         <property name="searchControls">
             <bean class="javax.naming.directory.SearchControls" />
         </property>
         <property name="connectionFactory" ref="connectionFactory" />
         <property name="resultAttributeMapping">
             <util:map>
-                <entry key="identifier" value="uid" />
-                <entry key="email" value="mail" />
-                <entry key="fullname" value="cn" />
-                <entry key="lastname" value="sn" />
+                <entry key="uid" value="identifier" />
+                <entry key="mail" value="email" />
+                <entry key="cn" value="fullname" />
+                <entry key="sn" value="lastname" />
                 <!-- TODO: see if other are needed (groups ?) -->            
             </util:map>        
         </property>
