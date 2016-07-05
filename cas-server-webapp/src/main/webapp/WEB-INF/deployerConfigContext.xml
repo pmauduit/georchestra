@@ -56,6 +56,7 @@
         <constructor-arg value="${ldap.authn.groupSearchFilter}" />
         <constructor-arg value="${ldap.authn.groupRoleAttribute}" />
         <constructor-arg value="${ldap.authn.pendingGroupName}" />
+        <!--  TODO: useful ? attribute resolution is done by other beans below -->
         <property name="principalAttributeMap">
             <map>
                 <entry key="cn" value="fullname" />
@@ -64,6 +65,32 @@
                 <entry key="mail" value="email" />
             </map>
         </property>
+    </bean>
+    
+    <!-- PPIGE OpenId specific configuration:
+      This bean will handle the remap between attribute resolution in CAS
+      and OpenId attribute release via the AX (Attributes Exchanges) message
+      in OpenIdv2.
+      
+      This requires a specific version of cas-server-support-openid.
+     -->
+    <bean class="org.jasig.cas.support.openid.OpenIdExchangeAttributeReleaser">
+      <property name="attributeMapping">
+        <map>
+          <entry key="fullname" value="fullname" />
+          <entry key="identifier" value="uid" />
+          <entry key="organisation" value="organisation" />
+          <entry key="email" value="email" />
+        </map>
+      </property>
+      <property name="attributeUris">
+        <map>
+          <entry key="fullname" value="http://axschema.org/namePerson" />
+          <entry key="uid" value="http://axschema.org/namePerson/friendly" />
+          <entry key="organisation" value="http://axschema.org/company/name" />
+          <entry key="email" value="http://schema.openid.net/contact/email" />
+        </map>
+      </property>
     </bean>
     
     <!-- yadis.xml / needed for OpenIdv2 -->
@@ -85,6 +112,7 @@
         <property name="resultAttributeMapping">
             <util:map>
                 <entry key="uid" value="identifier" />
+                <entry key="o" value="organisation" />
                 <entry key="mail" value="email" />
                 <entry key="cn" value="fullname" />
                 <entry key="sn" value="lastname" />
