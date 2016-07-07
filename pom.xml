@@ -82,6 +82,7 @@
     <module>ogc-server-statistics</module>
     <module>server-deploy-support</module>
     <module>commons</module>
+    <module>cas-server-support-openid</module>
   </modules>
   <build>
     <plugins>

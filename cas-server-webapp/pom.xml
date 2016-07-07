@@ -53,7 +53,17 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
           </exclusion>
+          <exclusion>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-support-openid</artifactId>
+          </exclusion>
         </exclusions>
+    </dependency>
+    <dependency>
+        <groupId>org.jasig.cas</groupId>
+        <artifactId>cas-server-support-openid</artifactId>
+        <version>${cas.version}</version>
+        <classifier>georchestra</classifier>
     </dependency>
     <dependency>
         <groupId>org.jasig.cas</groupId>
