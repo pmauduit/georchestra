@@ -5,6 +5,7 @@
     <artifactId>root</artifactId>
     <version>16.06-SNAPSHOT</version>
   </parent>
+  <groupId>org.jasig.cas</groupId>
   <artifactId>cas-server-support-openid</artifactId>
   <packaging>jar</packaging>
   <name>Jasig CAS server support OpenId - geOrchestra</name>
