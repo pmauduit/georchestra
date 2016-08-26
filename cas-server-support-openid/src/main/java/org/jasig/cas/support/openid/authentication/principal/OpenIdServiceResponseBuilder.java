@@ -95,13 +95,14 @@ public class OpenIdServiceResponseBuilder extends AbstractWebApplicationServiceR
 
         Assertion assertion = null;
         try {
-            if (associated && associationValid) {
+// Stateless mode
+//            if (associated && associationValid) {
                 assertion = centralAuthenticationService.validateServiceTicket(ticketId, service);
                 logger.debug("Validated openid ticket {} for {}", ticketId, service);
-            } else {
-                logger.warn("Association does not exist or is not valid");
-                successFullAuthentication = false;
-            }
+//            } else {
+//                logger.warn("Association does not exist or is not valid");
+//                successFullAuthentication = false;
+//            }
         } catch (final AbstractTicketException te) {
             logger.error("Could not validate ticket : {}", te.getMessage(), te);
             successFullAuthentication = false;
