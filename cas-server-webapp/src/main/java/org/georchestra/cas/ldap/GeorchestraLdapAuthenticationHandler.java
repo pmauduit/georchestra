@@ -76,8 +76,8 @@ public class GeorchestraLdapAuthenticationHandler extends LdapAuthenticationHand
 
     private String userBaseDn = "ou=users,dc=georchestra,dc=org";
 
-    public static String ORG_ID_KEY   = "ppige_organism_id";
-    public static String ORG_NAME_KEY = "ppige_organism_name";
+    public static String ORG_ID_KEY   = "org_id";
+    public static String ORG_NAME_KEY = "org_name";
     
     private SearchControls searchControls = new SearchControls();
 
