@@ -38,6 +38,7 @@ import org.jasig.cas.authentication.UsernamePasswordCredential;
 import org.jasig.cas.authentication.principal.Principal;
 import org.ldaptive.BindRequest;
 import org.ldaptive.Connection;
+import org.ldaptive.ConnectionFactory;
 import org.ldaptive.Credential;
 import org.ldaptive.DefaultConnectionFactory;
 import org.ldaptive.LdapAttribute;
@@ -164,9 +165,17 @@ public class GeorchestraLdapAuthenticationHandler extends LdapAuthenticationHand
     @Override
     protected Principal createPrincipal(final String username, final LdapEntry ldapEntry) throws LoginException {
         Principal p = super.createPrincipal(username, ldapEntry);
-        String orgName = getOrganisationName(username);
+        //ConnectionFactory connectionFactory, SearchControls searchControls,
+        //Pattern orgMembershipRegex, String username, String userBaseDn
+        
+        String orgName = GeorchestraLdapUtils.getOrganisationName(connectionFactory,
+                searchControls, orgMembershipRegex, username, userBaseDn);
         if (orgName != null) {
-            String orgId = getOrganisationId(orgName);
+            //    public static String getOrganisationId(final String orgCn, final ConnectionFactory connectionFactory,
+            // SearchControls searchControls, String orgBase, String orgDnField, String orgIdField)
+            
+            String orgId = GeorchestraLdapUtils.getOrganisationId(connectionFactory, searchControls, orgName,
+                    orgBase, orgDnField, orgIdField);
             if (orgId != null) {
                 Map<String, Object> newMap = new HashMap<String, Object>(p.getAttributes());
                 newMap.put(ORG_ID_KEY, orgId);
@@ -180,118 +189,9 @@ public class GeorchestraLdapAuthenticationHandler extends LdapAuthenticationHand
         }
         return p;
     }
-    
-    private String getOrganisationName(final String username) {
-        Connection connection = null;
-        String orgCn = null;
-        try {
-            try {
-                connection = connectionFactory.getConnection();
-                connection.open();
-            } catch (final LdapException e) {
-                throw new RuntimeException("Failed getting LDAP connection", e);
-            }
-            Response<SearchResult> response;
-            try {
-                response = new SearchOperation(connection).execute(createMemberOfRequest(username));
-            } catch (final LdapException e) {
-                throw new RuntimeException("Failed executing LDAP query on user: " + username, e);
-            }
-            SearchResult result = response.getResult();
-            // step 2
 
-            for (final LdapEntry entry : result.getEntries()) {
-               for (LdapAttribute att : entry.getAttributes()) {
-                   Collection<String> attVals = att.getStringValues();
-                   for (String attVal : attVals) {
-                        if (attVal != null && attVal.matches(orgMembershipRegex.toString())) {
-                            Matcher m = orgMembershipRegex.matcher(attVal);
-                            if (m.find()) {
-                                logger.debug("Found organisation membership: " + attVal);
-                                orgCn = m.group(1);
-                                break;
-                            }
-                        }
-                    }
-               }
-               // abort after the first user found
-               break;
-            }
-            } finally {
-                if (connection != null && connection.isOpen()) {
-                    try {
-                        connection.close();
-                    } catch (final Exception ex) {
-                        logger.warn("Could not close ldap connection", ex);
-                    }
-                }
-            }
-        return orgCn;
-    }
-    
-    private String getOrganisationId(final String orgCn) {
-        Connection connection = null;
-        String orgId = null;
-        Response<SearchResult> response = null;
 
-        try {
-            try {
-                connection = connectionFactory.getConnection();
-                connection.open();
-            } catch (final LdapException e) {
-                throw new RuntimeException("Failed getting LDAP connection", e);
-            }
-            try {
-                response = new SearchOperation(connection).execute(createOrgRequest(orgCn));
-            } catch (final LdapException e) {
-                throw new RuntimeException("Failed executing LDAP query ", e);
-            }
-            SearchResult result = response.getResult();
-            for (final LdapEntry entry : result.getEntries()) {
-                for (LdapAttribute att : entry.getAttributes()) {
-                    orgId = att.getStringValue();
-                    break;
-                }
-                break;
-            }
-            if (orgId == null) {
-                logger.warn("Could not find the organization id for organization" + orgCn);
-            } else {
-                return orgId;
-            }
-        } finally {
-            if (connection != null && connection.isOpen()) {
-                try {
-                    connection.close();
-                } catch (final Exception ex) {
-                    logger.warn("Could not close ldap connection", ex);
-                }
-            }
-        }
-        return orgId;
-    }
 
-    private SearchRequest createOrgRequest(final String orgCn) {
-        final SearchRequest request = new SearchRequest();
-        request.setBaseDn(orgBase);
-        request.setSearchFilter(new SearchFilter(String.format("(&(%s=%s)(objectClass=organization))", orgDnField, orgCn)));
-        request.setReturnAttributes(orgIdField);
-        request.setSearchScope(SearchScope.ONELEVEL);
-        request.setSizeLimit(this.searchControls.getCountLimit());
-        request.setTimeLimit(this.searchControls.getTimeLimit());
-        return request;
-    }
-
-    private SearchRequest createMemberOfRequest(final String username) {
-        final SearchRequest request = new SearchRequest();
-        request.setBaseDn(this.userBaseDn);
-        request.setSearchFilter(new SearchFilter(String.format("%s=%s", "uid", username)));
-        request.setReturnAttributes("memberOf");
-        request.setSearchScope(SearchScope.ONELEVEL);
-        request.setSizeLimit(this.searchControls.getCountLimit());
-        request.setTimeLimit(this.searchControls.getTimeLimit());
-        return request;
-    }
     public void setConnectionFactory(DefaultConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
     }
