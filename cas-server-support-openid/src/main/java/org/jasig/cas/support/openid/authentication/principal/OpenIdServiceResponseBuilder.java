@@ -95,7 +95,7 @@ public class OpenIdServiceResponseBuilder extends AbstractWebApplicationServiceR
 
         Assertion assertion = null;
         try {
-// Stateless mode
+// Stateless mode: ISOGEO does not support extra exchanges needed by the stateful mode.
 //            if (associated && associationValid) {
                 assertion = centralAuthenticationService.validateServiceTicket(ticketId, service);
                 logger.debug("Validated openid ticket {} for {}", ticketId, service);
@@ -153,39 +153,30 @@ public class OpenIdServiceResponseBuilder extends AbstractWebApplicationServiceR
                                                    final String id) {
         Message response = null;
 
-        // Override ALL THE THINGS ! - geOrchestra OpenId: adding
-        // Attribute Exchanges needed for external apps
+        // geOrchestra OpenId: adding Attribute Exchanges needed for external apps
 
-        if (System.getProperty("backdoored.cas.version.wootwootwoot") != null) {
-            FetchResponse fetchResponse = null;
+        FetchResponse fetchResponse = null;
 
-            try {
-                final OpenIdExchangeAttributeReleaser rel = ApplicationContextProvider.getApplicationContext()
-                        .getBean(OpenIdExchangeAttributeReleaser.class);
+        try {
+            final OpenIdExchangeAttributeReleaser rel = ApplicationContextProvider.getApplicationContext()
+                    .getBean(OpenIdExchangeAttributeReleaser.class);
 
-                fetchResponse = rel.doRelease(principalParameters);
+            fetchResponse = rel.doRelease(principalParameters);
 
-                response = serverManager.authResponse(this.parameterList, id, id,
-                        successFullAuthentication, false);
+            response = serverManager.authResponse(this.parameterList, id, id, successFullAuthentication, false);
 
-                if (response instanceof AuthSuccess) {
-                    // Actually adds the AX attributes to the response
-                    response.addExtension(fetchResponse);
-                
-                    // And signs
-                    serverManager.sign((AuthSuccess) response);
-                }
-            } catch (NoSuchBeanDefinitionException e) {
-                logger.warn("No bean or multiple beans defined for OpenId attribute releasing."
-                        + "Please check your configuration");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            if (response instanceof AuthSuccess) {
+                // Actually adds the AX attributes to the response
+                response.addExtension(fetchResponse);
+
+                // And signs
+                serverManager.sign((AuthSuccess) response);
             }
-        }
-        // Normal CAS behaviour
-        else {
-            response = serverManager.authResponse(this.parameterList, id, id,
-                    successFullAuthentication, true);
+        } catch (NoSuchBeanDefinitionException e) {
+            logger.warn("No bean or multiple beans defined for OpenId attribute releasing."
+                    + "Please check your configuration");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
         parameters.putAll(response.getParameterMap());
