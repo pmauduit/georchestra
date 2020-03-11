@@ -1,0 +1,17 @@
+name: "mapfishapp"
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: "Configuring Maven"
+      run: |
+          mkdir -p $HOME/.m2
+          echo $M2_SETTINGS_FILE > $HOME/.m2/settings.xml
+      env:
+          M2_SETTINGS_FILE: ${{ secrets.M2_SETTINGS_FILE }}
+
+    - name: "test which repository  it is - checking available variables"
+      run: |
+         echo ${{ github.actor }} ${{ github.repository }}
