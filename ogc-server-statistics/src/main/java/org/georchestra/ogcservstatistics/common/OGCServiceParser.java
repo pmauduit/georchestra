@@ -17,7 +17,9 @@
  * geOrchestra.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.georchestra.ogcservstatistics.log4j;
+package org.georchestra.ogcservstatistics.common;
+
+import org.georchestra.ogcservstatistics.log4j.OGCServiceMessageFormatter;
 
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.compile;

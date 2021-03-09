@@ -20,7 +20,6 @@
 package org.georchestra.ogcservstatistics.log4j;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -32,7 +31,7 @@ import javax.sql.DataSource;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.ErrorCode;
 import org.apache.log4j.spi.LoggingEvent;
-import org.georchestra.ogcservstatistics.OGCServStatisticsException;
+import org.georchestra.ogcservstatistics.common.OGCServiceParser;
 import org.georchestra.ogcservstatistics.dataservices.DataServicesConfiguration;
 import org.georchestra.ogcservstatistics.dataservices.InsertCommand;
 

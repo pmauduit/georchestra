@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.georchestra.ogcservstatistics.common.OGCServiceParser;
 import org.georchestra.ogcservstatistics.util.Utility;
 import org.junit.Test;
 
