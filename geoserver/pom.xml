@@ -27,6 +27,7 @@
 -->
   </properties>
   <modules>
+      <module>geoserver-submodule/src/extension/control-flow</module>
     <module>geoserver-submodule/src/main</module>
     <module>geoserver-submodule/src/restconfig</module>
     <module>geoserver-submodule/src/gwc</module>

@@ -474,7 +474,7 @@
         <dependency>
           <groupId>org.geoserver.extension</groupId>
           <artifactId>gs-control-flow</artifactId>
-          <version>${gs.version}</version>
+          <version>${gs.version}-georchestra</version>
         </dependency>
       </dependencies>
     </profile>
